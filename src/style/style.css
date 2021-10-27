@@ -1,0 +1,24 @@
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.grid {
+  display: flex;
+  justify-content: space-around;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+tr > td {
+  /* table-layout: fixed; */
+  visibility: visible;
+  background: white;
+  border: 1px solid black;
+  padding: 12.5px;
+}
