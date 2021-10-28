@@ -35,6 +35,9 @@ const Drop = (event) => {
     dragItemParent.classList.remove(`${dragItemParent.className}`);
     dragItemParent.classList.add("unvisited");
     dropZone.appendChild(dragItem);
+    setTimeout(() => {
+      dragItem.classList.remove("boxOver");
+    }, 200);
   }
 };
 

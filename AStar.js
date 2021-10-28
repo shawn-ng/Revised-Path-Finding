@@ -1,4 +1,89 @@
-Astarvisitedlist = [];
+// how it visit
+
+// this is the base logic
+// the A* -> distance need to store the g value and previous have to store the the previous node
+// if f value is the same check the g cost
+
+let graph = new WeightedGraph();
+let visitedPath = [];
+const graphConstructorAStar = (start, end) => {
+  let openList = [];
+  let closedList = [];
+  let CostInfo = {};
+  let previous = {};
+  openList.push(start.id);
+
+  while (openList.length) {
+    let currentObservedNode = openList[0];
+    let neighbours = [...getSurroundingNode(currentObservedNode)];
+
+    neighbours.forEach((coor) => {
+      if (!CostInfo[coor]) {
+        CostInfo[coor][fCost] = heuristic(currentObservedNode, coor);
+        CostInfo[coor][gCost] = CostInfo[currentObservedNode].gCost + 10;
+        CostInfo[coor][hCost] = CostInfo[coor][fCost] - CostInfo[coor][gCost];
+      } else if (CostInfo[coor]) {
+        let newfCost = heuristic(currentObservedNode, coor);
+      }
+    });
+  }
+
+  while (found === false) {}
+};
+
+// this is the f cost
+const heuristic = (pos1, pos2) => {
+  let point1 = strToDigit(pos1);
+  let point2 = strToDigit(pos2);
+  let result =
+    Math.abs(point1[0] - point2[0]) + Math.abs(point1[1] - point2[1]);
+
+  return result;
+};
+
+const strToDigit = (str) => {
+  let coordinate = [];
+  str.split("-").forEach((num) => {
+    coordinate.push(parseFloat(num));
+  });
+
+  return coordinate;
+};
+
+const getSurroundingNode = (node) => {
+  const currentNode = strToDigit(node);
+
+  let result = [];
+
+  const up = [currentNode[0] - 1, currentNode[1]];
+  const down = [currentNode[0] + 1, currentNode[1]];
+  const right = [currentNode[0], currentNode[1] + 1];
+  const left = [currentNode[0], currentNode[1] - 1];
+
+  let neighbours = [up, down, right, left];
+
+  // checking if the neighbour node is wall or currentNode node
+  for (let i = 0; i < neighbours.length; i++) {
+    let element = document.getElementById(digitToStr(neighbours[i]));
+
+    if (element !== null) {
+      if (element.className === "unvisited") {
+        // [opened node, origin]
+        result.push([digitToStr(neighbours[i]), node]);
+        element.classList.remove("unvisited");
+        element.classList.add("unvisited-picked");
+      }
+      if (element.className === "end") {
+        result.push([digitToStr(neighbours[i]), node]);
+      }
+    } else {
+      break;
+    }
+  }
+
+  return result;
+};
+
 class WeightedGraph {
   constructor() {
     this.adjacencyList = {};
@@ -77,92 +162,12 @@ class WeightedGraph {
 
     return path.concat(smallest).reverse();
   }
-
-  AStar(start, end) {
-    // this is to remove node and add node easier
-    console.log("A Start");
-    const nodes = new PriorityQueue();
-
-    // the distance from the origin node (shortest possible)
-    const distances = {};
-
-    //  this is to store the where the node come from
-    const previous = {};
-
-    // this is the result that we want
-    let path = [];
-
-    // this is the smallest node
-    let smallest;
-
-    // build up initial state
-    for (let vertex in this.adjacencyList) {
-      if (vertex == start) {
-        distances[vertex] = 0;
-        nodes.enqueue(vertex, 0, 0);
-      } else {
-        distances[vertex] = Infinity;
-        nodes.enqueue(vertex, Infinity);
-      }
-      previous[vertex] = null;
-    }
-    console.log();
-
-    // visiting node
-    while (nodes.values.length) {
-      smallest = nodes.dequeue().value;
-      if (smallest === end) {
-        // WE ARE DONE
-
-        while (previous[smallest]) {
-          path.push(smallest);
-          smallest = previous[smallest];
-        }
-        console.log("found end loop ends");
-        break;
-      }
-
-      let smallestNode = document.getElementById(`${smallest}`);
-      smallestNode.classList.remove("unvisited-picked");
-      smallestNode.classList.add("visited");
-      Astarvisitedlist.push(smallest);
-
-      if (smallest || distances[smallest] !== Infinity) {
-        for (let neighbour in this.adjacencyList[smallest]) {
-          let nextNode = this.adjacencyList[smallest][neighbour];
-
-          // h cost
-          let candidate = this.heuristic(end, nextNode.node);
-
-          if (candidate < distances[nextNode.node]) {
-            // updating new smallest distance to neighbour
-            distances[nextNode.node] = candidate;
-            // updating previous - How we got to the neighbour
-            previous[nextNode.node] = smallest;
-            // enquee in priority queue with new priority
-            nodes.enqueue(nextNode.node, candidate);
-          }
-        }
-      }
-    }
-    return path.concat(smallest).reverse();
-  }
-
-  heuristic = (pos1, pos2) => {
-    let point1 = strToDigit(pos1);
-    let point2 = strToDigit(pos2);
-    let result =
-      Math.abs(point1[0] - point2[0]) + Math.abs(point1[1] - point2[1]);
-
-    return result;
-  };
 }
 
 class Node {
-  constructor(value, priority, g) {
+  constructor(value, priority) {
     this.value = value;
     this.priority = priority;
-    this.g = g;
   }
 }
 
@@ -171,8 +176,8 @@ class PriorityQueue {
     this.values = []; // just an example
   }
 
-  enqueue(value, priority, g = null) {
-    let newNode = new Node(value, priority, g);
+  enqueue(value, priority) {
+    let newNode = new Node(value, priority);
     this.values.push(newNode);
     this.bubbleUp();
   }
@@ -237,12 +242,3 @@ class PriorityQueue {
     }
   }
 }
-// let g = new WeightedGraph();
-// let graph = graphConstructorAStar("10-10", g, "10-40");
-
-// console.log(g.AStar("10-10", "10-40"));
-// console.log(Astarvisitedlist);
-// for (let i = 0; i < Astarvisitedlist.length; i++) {
-//   let gg = document.getElementById(`${Astarvisitedlist[i]}`);
-//   gg.style.backgroundColor = "yellow";
-// }

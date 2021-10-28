@@ -5,8 +5,12 @@ const algorithmChoice = document.getElementById("select-option");
 
 // function to handle start button
 const handleStart = (event) => {
+  console.log(algorithmChoice.value);
   if (algorithmChoice.value === "Dijkstra's") {
     runDijkstra();
+  } else if (algorithmChoice.value === "A Star") {
+    console.log("g");
+    runAStar();
   }
 };
 
@@ -32,6 +36,31 @@ const runDijkstra = async () => {
 
   // executing the path
   let path = graph.Dijkstra(start.id, end.id);
+
+  for (let i = 1; i < path.length - 1; i++) {
+    let get = document.getElementById(path[i]);
+    await sleep(100);
+    get.style.backgroundColor = "green";
+  }
+};
+
+const runAStar = async () => {
+  const start = document.querySelector(".start");
+  const end = document.querySelector(".end");
+  const graph = new WeightedGraph();
+
+  // construct a graph for the AStar algorithm
+  graphConstructorAStar(start.id, graph, end);
+
+  // executing the path
+  let path = graph.AStar(start.id, end.id);
+
+  // visulaizing
+  for (let i = 0; i < Astarvisitedlist.length; i++) {
+    const visitedNode = document.getElementById(Astarvisitedlist[i]);
+    await sleep(50);
+    visitedNode.classList.add("yellowy");
+  }
 
   for (let i = 1; i < path.length - 1; i++) {
     let get = document.getElementById(path[i]);
