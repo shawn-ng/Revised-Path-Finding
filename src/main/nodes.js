@@ -6,7 +6,7 @@ const endingNodePosition = document.getElementById("10-40");
 // changing the colour and the class
 // starting
 const startNode = document.createElement("div");
-startNode.style.backgroundColor = "blue";
+startNode.style.backgroundColor = "#362951";
 startNode.style.width = "20px";
 startNode.style.height = "20px";
 startNode.classList.add("start");
@@ -17,7 +17,7 @@ startingNodePosition.appendChild(startNode);
 
 // ending
 const endNode = document.createElement("div");
-endNode.style.backgroundColor = "red";
+endNode.style.backgroundColor = "#ea1953";
 endNode.style.width = "20px";
 endNode.style.height = "20px";
 endNode.classList.add("end");

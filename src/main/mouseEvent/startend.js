@@ -6,14 +6,16 @@ const DragStart = (event) => {
   dragItem = event.target;
   dragItemParent = document.querySelector(`.${dragItem.className}`);
   dragItem.style.opacity = 0.1;
+  event.dataTransfer.effectAllowed = "move";
 };
 
-const DragEnd = () => {
+const DragEnd = (event) => {
   dragItem.style.opacity = 1;
 };
 
 const DragOver = (event) => {
   event.preventDefault();
+  event.dataTransfer.dropEffect = "move";
 };
 
 const DragEnter = (event) => {

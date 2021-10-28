@@ -80,7 +80,7 @@ class WeightedGraph {
 
   AStar(start, end) {
     // this is to remove node and add node easier
-    console.log("A Start");
+
     const nodes = new PriorityQueue();
 
     // the distance from the origin node (shortest possible)
@@ -106,7 +106,6 @@ class WeightedGraph {
       }
       previous[vertex] = null;
     }
-    console.log();
 
     // visiting node
     while (nodes.values.length) {
@@ -118,7 +117,7 @@ class WeightedGraph {
           path.push(smallest);
           smallest = previous[smallest];
         }
-        console.log("found end loop ends");
+
         break;
       }
 

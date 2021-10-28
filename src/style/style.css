@@ -55,6 +55,37 @@ tr > td {
 
 /* yellow */
 .yellowy {
-  background-color: yellow;
   border-radius: 2px;
+  animation: coloring 2s forwards;
+}
+
+@keyframes coloring {
+  from {
+    background-color: #89c7e7;
+  }
+  to {
+    background-color: #ffffc2;
+  }
+}
+
+.greeny {
+  border-radius: 2px;
+  animation: coloring2 2s forwards;
+}
+
+@keyframes coloring2 {
+  from {
+    background-color: #5bc489;
+  }
+  to {
+    background-color: #008d8c;
+  }
+}
+
+div.start {
+  border-radius: 50%;
+}
+
+div.end {
+  border-radius: 50%;
 }

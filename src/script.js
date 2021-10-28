@@ -5,11 +5,9 @@ const algorithmChoice = document.getElementById("select-option");
 
 // function to handle start button
 const handleStart = (event) => {
-  console.log(algorithmChoice.value);
   if (algorithmChoice.value === "Dijkstra's") {
     runDijkstra();
   } else if (algorithmChoice.value === "A Star") {
-    console.log("g");
     runAStar();
   }
 };
@@ -39,8 +37,9 @@ const runDijkstra = async () => {
 
   for (let i = 1; i < path.length - 1; i++) {
     let get = document.getElementById(path[i]);
-    await sleep(100);
-    get.style.backgroundColor = "green";
+    get.classList.remove("yellowy");
+    await sleep(50);
+    get.classList.add("greeny");
   }
 };
 
@@ -64,8 +63,9 @@ const runAStar = async () => {
 
   for (let i = 1; i < path.length - 1; i++) {
     let get = document.getElementById(path[i]);
-    await sleep(100);
-    get.style.backgroundColor = "green";
+    get.classList.remove("yellowy");
+    await sleep(50);
+    get.classList.add("greeny");
   }
 };
 
