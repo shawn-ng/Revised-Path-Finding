@@ -13,12 +13,48 @@
 table {
   border-collapse: collapse;
   border: 1px solid black;
+  table-layout: fixed;
 }
 
 tr > td {
-  /* table-layout: fixed; */
   visibility: visible;
   background: white;
-  border: 1px solid black;
-  padding: 12.5px;
+  border: 1px solid rgb(59, 176, 206);
+  width: 22px;
+  height: 22px;
+}
+
+/* Animation for node dragging */
+.boxOver {
+  animation-name: nodeAnimation;
+  animation-duration: 2s;
+}
+
+@keyframes nodeAnimation {
+  0% {
+    width: 17px;
+    height: 17px;
+  }
+  25% {
+    width: 10px;
+    height: 10px;
+  }
+  50% {
+    width: 15px;
+    height: 15px;
+  }
+  75% {
+    width: 25px;
+    height: 25px;
+  }
+  100% {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* yellow */
+.yellowy {
+  background-color: yellow;
+  border-radius: 2px;
 }
